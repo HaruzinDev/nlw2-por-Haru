@@ -11,75 +11,17 @@
 
 	// }
 
-
-const proffys = []
-
-const subjects = [
-	"Artes",
-	"Biologia",
-    "Ciências",
-    "Educação física",
-    "Física",
-    "Geografia",
-    "História",
-    "Matemática",
-    "Português",
-    "Química"
-]
-
-const weekdays = [
-	"Domingo",
-	"Segunda-feira",
-	"Terça-feira",
-	"Quarta-feira",
-	"Quinta-feira",
-	"Sexta-feira",
-	"Sábado"
-]
-
-function getSubject(subjectnumber) {
-	const position = +subjectnumber -1
-	return subjects[position]
-}
-
-function pageLanding(req, res) {
-
-	return res.render("index.html")
-
-}
-
-function pageStudy(req, res) {
-
-	const filter = req.query
-
-	return res.render("study.html", { proffys, filter, subjects, weekdays })
-
-}
-
-function pageClasses(req, res) {
-
-	const dados = req.query
-
-	const isEmpty = Object.keys(dados).length == 0
-
-	if(!isEmpty) {
-	dados.subject = getSubject(dados.subject)
-	proffys.push(dados)
-
-	return res.redirect("/sucessfull")
-}
-
-	return res.render("give-classes.html", { proffys, subjects, weekdays })
-
-}
-
-function pageSucessfull(req, res) {
-	return res.render("page-sucessfull.html")
-}
-
 const express = require('express');
 
 const server = express()
+
+const {
+	pageLanding,
+    pageClasses,
+    pageStudy,
+	pageSucessfull,
+	saveClasses
+} = require('./src/database/pages.js')
 
 const nunjucks = require('nunjucks')
 
@@ -90,6 +32,7 @@ nunjucks.configure('src/views', {
 
 
 server
+.use(express.urlencoded({extended: true}))
 .use(express.static(__dirname + '/public'))
 
 .get("/", pageLanding)
@@ -97,6 +40,8 @@ server
 .get("/study", pageStudy)
 
 .get("/give-classes", pageClasses)
+
+.post("/save-Class", saveClasses)
 
 .get("/sucessfull", pageSucessfull)
 
