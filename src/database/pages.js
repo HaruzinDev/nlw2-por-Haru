@@ -88,7 +88,7 @@ async function saveClasses(req, res) {
 		queryString += "&weekday=" + req.body.weekday[0]
 		queryString += "&time=" + req.body.time_from[0]
 
-		return res.redirect("/sucessfull")// + queryString
+		return res.redirect("/successfull")// + queryString
 	} catch (error) {
 		console.log(error)
 	}
@@ -96,14 +96,14 @@ async function saveClasses(req, res) {
 }
 
 
-function pageSucessfull(req, res) {
-	return res.render("page-sucessfull.html")
+function pageSuccessfull(req, res) {
+	return res.render("page-successfull.html")
 }
 
 module.exports = {
     pageLanding,
     pageClasses,
     pageStudy,
-	pageSucessfull,
+	pageSuccessfull,
 	saveClasses
 }

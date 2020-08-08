@@ -10,16 +10,16 @@
 	// 	time_to: [1220]
 
 	// }
-
+const functions = require('firebase-functions')
 const express = require('express');
-
+console.log('algo')
 const server = express()
 
 const {
 	pageLanding,
     pageClasses,
     pageStudy,
-	pageSucessfull,
+	pageSuccessfull,
 	saveClasses
 } = require('./src/database/pages.js')
 
@@ -41,8 +41,14 @@ server
 
 .get("/give-classes", pageClasses)
 
-.post("/save-Class", saveClasses)
+.post("/successfull", pageSuccessfull)//saveClasses
 
-.get("/sucessfull", pageSucessfull)
+.get("/successfull", pageSuccessfull)
+
+.use(function (req, res, next) {
+	res.status(404).render("404.html")
+})
 
 .listen(5000)
+
+exports.server = functions.https.onRequest(server);
