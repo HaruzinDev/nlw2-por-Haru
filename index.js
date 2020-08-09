@@ -12,7 +12,6 @@
 	// }
 const functions = require('firebase-functions')
 const express = require('express');
-console.log('algo')
 const server = express()
 
 const {
@@ -41,9 +40,9 @@ server
 
 .get("/give-classes", pageClasses)
 
-.post("/successfull", pageSuccessfull)//saveClasses
-
 .get("/successfull", pageSuccessfull)
+
+.post("/save-classes", saveClasses)
 
 .use(function (req, res, next) {
 	res.status(404).render("404.html")

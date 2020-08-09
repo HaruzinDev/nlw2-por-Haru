@@ -29,7 +29,7 @@ async function pageStudy(req, res) {
         AND class_schedule.time_from <= ${timeToMinutes}
         AND class_schedule.time_to > ${timeToMinutes}
 	)
-	AND classes.subject = ${filter.subject}
+	AND classes.subject = '${filter.subject}'
 	`
 
 	try {
@@ -84,11 +84,12 @@ async function saveClasses(req, res) {
 	const db = await database
 	await createProffy(db, { proffyValue, classValue, classScheduleValues })
 
-		let queryString = "?subject=" + req.body.subject
-		queryString += "&weekday=" + req.body.weekday[0]
-		queryString += "&time=" + req.body.time_from[0]
+		// let queryString = "?subject=" + req.body.subject
+		// queryString += "&weekday=" + req.body.weekday[0]
+		// queryString += "&time=" + req.body.time_from[0]
 
-		return res.redirect("/successfull")// + queryString
+		return res.redirect("/successfull")
+
 	} catch (error) {
 		console.log(error)
 	}
@@ -97,7 +98,7 @@ async function saveClasses(req, res) {
 
 
 function pageSuccessfull(req, res) {
-	return res.render("page-successfull.html")
+	res.render("page-successfull.html")
 }
 
 module.exports = {
